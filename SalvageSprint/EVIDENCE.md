@@ -57,6 +57,8 @@ Use one actual situation. Include the observation data, derived facts, selected 
 
 
 Supplied test result, with any added tests identified:
+
+
 Live walkthrough checked by / recording link if used:
 
 
@@ -64,8 +66,14 @@ Live walkthrough checked by / recording link if used:
 ## One correction and one independent check
 
 The original weakness and why it happened:
+
+
 What I changed and why it addresses the cause:
+
+
 My counterexample or experiment: prediction, observed result, and one limitation:
+
+
 
 
 
@@ -74,4 +82,8 @@ My counterexample or experiment: prediction, observed result, and one limitation
 People I discussed or playtested with:
 Code, sources or substantive tools/AI assistance I used, and how I verified them:
 If unfinished: what works, exact reproduction steps, and the help I need:
+
+
+
+
 
