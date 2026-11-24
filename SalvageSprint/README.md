@@ -43,13 +43,23 @@ Check that Unity Hub can open **Unity 6.3 LTS**. Our teaching baseline is **6000
 
 **Purpose:** learn the game and establish a working checkpoint before changing AI.
 
-1. Create your own repository from the supplied project using the course's announced route. Use it through January. You should create a repo by using *this* repo *as a template*. You're also allowed to download as ZIP and create from that, as in the previous course. download a ZIP, extract it, keep Assets/Packages/ProjectSettings, initialise your repository and follow the teacher's submission/access instructions.
+1. Create your own repository from the supplied project using the course's announced route. Use it through January. You should create a repo by using this repo as a template. You're also allowed to download as ZIP and create from that, as in the previous course. download a ZIP, extract it, keep Assets/Packages/ProjectSettings, initialise your repository and follow the teacher's submission/access instructions.
+
 2. Open this folder in Unity Hub. Wait for package import and C# compilation. Enable the Input System backend and restart if Unity prompts you.
-3. The teacher's prepared release should open `Assets/SalvageSprint/Generated/Scenes/01\_Normal.unity`. If generated scenes are absent, use **Tools > Salvage Sprint > Create Course Scenes** once and let me know if you succeeded. This is a setup fallback, not an AI exercise.
-4. Press Play. Move with WASD/arrows or a gamepad left stick. Pick up gold scrap automatically and bank it at the cyan depot. Carry one at a time. First to five banked scrap wins; otherwise the highest score wins at the two-minute timeout. Equal scores produce a draw.
-5. R restarts. F1 toggles the AI debug view. F2 returns to the normal race. Select the rival in the Hierarchy with Scene Gizmos enabled to see sensing range and route drawing.
-6. Play to a result and restart. Do not repair unrelated infrastructure yourself. Report compile, input, scoring or restart problems to the teacher.
-7. Commit the baseline. Keep Assets and their `.meta` files, Packages, ProjectSettings and your evidence. Do not commit Library, Temp, Logs, generated IDE files or build output. Tests are source files under Assets, not files in bin/obj.
+
+3. In Unity, open Window → Package Management → Package Manager. Click Unity registry, search for "Visual Studio Editor", and Install it. Close the package manager. -> open Edit → Preferences → External Tools. Select your installed Visual Studio under External Script Editor, then click Regenerate project files. Open a script from Unity and confirm that Unity types and code completion work.
+
+4. Actual scenes will be absent at first, use Tools > Salvage Sprint > Create Course Scenes once and let me know if you succeeded. This is a setup fallback, not an AI exercise.
+
+5. Press Play. Move with WASD/arrows or a gamepad left stick. Pick up gold scrap automatically and bank it at the cyan depot. Carry one at a time. First to five banked scrap wins; otherwise the highest score wins at the two-minute timeout. Equal scores produce a draw.
+
+6. R restarts. F1 toggles the AI debug view. F2 returns to the normal race. Select the rival in the Hierarchy with Scene Gizmos enabled to see sensing range and route drawing.
+
+7. Play to a result and restart. Do not repair unrelated infrastructure yourself. Report compile, input, scoring or restart problems to the teacher.
+
+8. Commit the baseline. Keep Assets and their `.meta` files, Packages, ProjectSettings and your evidence. Do not commit Library, Temp, Logs, generated IDE files or build output. Tests are source files under Assets, not files in bin/obj.
+
+
 
 **Done:** the game runs, scores, finishes and restarts, and your baseline is committed. Suggested commit: `week1: working baseline`.
 
@@ -170,7 +180,7 @@ Open **Window > General > Test Runner > EditMode**. There are **17 supplied test
 
 Implementing later rules early can turn additional tests green. Adding your own tests changes the total. Read the names and assertions rather than chasing the count. Do not delete tests, change expected values, hard-code the fixture IDs, or replace sensor rules with an all-knowing world query.
 
-These tests check decision snapshots and game-rule logic. They cannot prove that the actual scene, physics, input or NavMesh works. The six scene checks are required evidence too. Tests under Assets remain source-controlled. Unity recreates its generated 
+These tests check decision snapshots and game-rule logic. They cannot prove that the actual scene, physics, input or NavMesh works. The six scene checks are required evidence too. Tests under Assets remain source-controlled. Unity recreates its generated
 
 assemblies; deleting generated output does not delete the test source.
 
