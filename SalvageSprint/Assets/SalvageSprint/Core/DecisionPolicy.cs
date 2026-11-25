@@ -16,12 +16,17 @@ namespace SalvageSprint.Core
 
             int nearest = -1;
             float distance = float.PositiveInfinity;
+            
             foreach (Candidate candidate in observation.Candidates)
             {
                 // Deliberately naive: ignores Visible, Remembered and Blocked.
                 if (candidate.Available && candidate.DistanceSquared < distance)
-                { nearest = candidate.Id; distance = candidate.DistanceSquared; }
+                { 
+                    nearest = candidate.Id; 
+                    distance = candidate.DistanceSquared; 
+                }
             }
+            
             return new AgentFacts(false, nearest, false);
         }
 
