@@ -18,9 +18,11 @@ namespace SalvageSprint.Core
             float distance = float.PositiveInfinity;
             foreach (Candidate candidate in observation.Candidates)
             {
-                // Deliberately naive: ignores Visible, Remembered and Blocked.
-                if (candidate.Available && candidate.DistanceSquared < distance)
-                { nearest = candidate.Id; distance = candidate.DistanceSquared; }
+                if (IsEligible(candidate) && candidate.DistanceSquared < distance) 
+                {
+                    nearest = candidate.Id;
+                    distance = candidate.DistanceSquared;
+                }
             }
             return new AgentFacts(false, nearest, false);
         }
@@ -31,10 +33,24 @@ namespace SalvageSprint.Core
         {
             // Deliberately naive: ignores RetainedTarget and any other facts.
             if (facts.NeedsDelivery)
+            {
                 return new Decision(TaskKind.Deliver, -1, "Cargo held: return to depot");
+            }
+            
             return facts.HasUsableTarget
+
                 ? new Decision(TaskKind.Collect, facts.SelectedTargetId, "Nearest candidate; reselected each tick")
                 : new Decision(TaskKind.Explore, -1, "No candidate: visit the next survey point");
+        }
+
+        // Bool to see if a candidate is eligible to be sought after:
+        // it needs to be available, visible OR remembered and it cannot be blocked
+        // This is just to save space and not having to write out longer code than needed.
+        private static bool IsEligible(Candidate candidate)
+        {
+            return candidate.Available
+                && (candidate.Visible || candidate.Remembered)
+                && !candidate.Blocked;
         }
     }
 }

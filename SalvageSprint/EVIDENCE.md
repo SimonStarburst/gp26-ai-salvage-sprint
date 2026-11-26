@@ -45,18 +45,19 @@ Use one actual situation. Include the observation data, derived facts, selected 
 
 ## Scenario record
 
-|Scenario|Predicted result|Observed result and short evidence / remaining issue|
+|Scenario|Predicted result.|Observed result and short evidence / remaining issue|
 |-|-|-|
-|Normal loop and restart|||
-|Carrying cargo|||
-|Hidden / remembered pickup|||
-|Target taken|||
-|Unreachable target|||
-|No usable pickup|||
+|Normal loop and restart|Predicting no issues with regular gameplay.||
+|Carrying cargo|It will carry cargo back to depot and then continue it's adventure.||
+|Hidden / remembered pickup|It will go for remembered Scrap Before the hidden one, hopefully||
+|Target taken|It will go for either closeset it can see or closest from memory.||
+|Unreachable target|It should go after a previously found target, so a remembered target, target it sees or patrol after one.|Instead of going after other targets, it focuses in on the one it is unable to reach and instead of going anywhere, the Rival just stands there|
+|No usable pickup|Patrolling until it realises there's no usable pickups.||
 
 
 
 Supplied test result, with any added tests identified:
+
 
 
 Live walkthrough checked by / recording link if used:
@@ -65,13 +66,29 @@ Live walkthrough checked by / recording link if used:
 
 ## One correction and one independent check
 
-The original weakness and why it happened:
+**The original weakness and why it happened:**
 
 
-What I changed and why it addresses the cause:
+
+The original weakness I chose to investigate was how the Rival focuses in on the unreachable target, even though it shouldn't be able to see it. It happened because the script itself didn't care whether a candidate was blocked or not.
 
 
-My counterexample or experiment: prediction, observed result, and one limitation:
+
+**What I changed and why it addresses the cause:**
+
+
+
+In the foreach-loop (Candidate candidate in observation.Candidates), it only looked if the candidate was available and within distance, it didn't check for anything else. By changing it from "candidate.Available" to "candidate.Available \&\& (candidate.Visible || candidate.Remembered) \&\& !candidate.Blocked" we could instead look if the candidate was available, if it was visible/remembered and if it wasn't blocked.
+
+
+
+**My counterexample or experiment: prediction, observed result, and one limitation:**
+
+
+
+My experiment was a bunch of else if-statements, one of the earliest ones being: else if (candidate.Available \&\& candidate.DistanceSquared < distance \&\& !candidate.Blocked \&\& candidate.Visible).
+
+I was struggling a bit to find the logic, which is why I found inspiration.
 
 
 
@@ -79,9 +96,19 @@ My counterexample or experiment: prediction, observed result, and one limitation
 
 ## Collaboration and help
 
-People I discussed or playtested with:
-Code, sources or substantive tools/AI assistance I used, and how I verified them:
-If unfinished: what works, exact reproduction steps, and the help I need:
+**People I discussed or playtested with:**
+
+
+
+
+**Code, sources or substantive tools/AI assistance I used, and how I verified them:**
+
+
+
+I did look at the finished written code by the teacher, because I was on the right track with how to write the required code but I was hitting some issues. By taking some inspiration from that script, I managed to see what I did wrong and could add the code I wanted.
+
+
+**If unfinished: what works, exact reproduction steps, and the help I need:**
 
 
 
