@@ -14,8 +14,22 @@ namespace SalvageSprint.Core
             if (observation.Carrying)
                 return new AgentFacts(true, -1, false);
 
+            foreach (Candidate candidate in observation.Candidates)
+            {
+                // If the ID of the candidate in the loop is the same as the ID being observed:
+                if (candidate.Id == observation.CurrentTargetId && IsEligible(candidate))
+                {
+                    // Returning that carrying = false, candidate.Id is selected target Id and
+                    // retainedTarget as true.
+                    return new AgentFacts(false, candidate.Id, true);
+                }
+            }
+
             int nearest = -1;
             float distance = float.PositiveInfinity;
+
+            // Serches for nearest eligible target if previous loop didn't return
+            // target
             foreach (Candidate candidate in observation.Candidates)
             {
                 if (IsEligible(candidate) && candidate.DistanceSquared < distance) 
@@ -35,6 +49,12 @@ namespace SalvageSprint.Core
             if (facts.NeedsDelivery)
             {
                 return new Decision(TaskKind.Deliver, -1, "Cargo held: return to depot");
+            }
+
+            // If there's no usable target, sets Rival to explore with it's Depot as an end goal
+            if (!facts.HasUsableTarget)
+            {
+                return new Decision(TaskKind.Explore, -1, "No usable target, explore to next exploration point");
             }
             
             return facts.HasUsableTarget

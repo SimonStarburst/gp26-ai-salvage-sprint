@@ -43,16 +43,20 @@ Use one actual situation. Include the observation data, derived facts, selected 
 
 
 
+* if Rival has scrap to deliver, it focuses on that. If it doesn't, it goes through an array of Candidates until it either finds a match in that Array that Rival can go after OR it goes through the same array to find the nearest visible and available Scrap. If that also doesn't work, it begins it's exploration-loop. 
+
+
+
 ## Scenario record
 
 |Scenario|Predicted result.|Observed result and short evidence / remaining issue|
 |-|-|-|
-|Normal loop and restart|Predicting no issues with regular gameplay.||
-|Carrying cargo|It will carry cargo back to depot and then continue it's adventure.||
-|Hidden / remembered pickup|It will go for remembered Scrap Before the hidden one, hopefully||
-|Target taken|It will go for either closeset it can see or closest from memory.||
+|Normal loop and restart|Predicting no issues with regular gameplay.|Normal loop works as instructed|
+|Carrying cargo|It will carry cargo back to depot and then continue it's adventure.|Carrying cargo has the Rival go back to it's Depot and later go for the nearest Scrap|
+|Hidden / remembered pickup|It will go for remembered Scrap before the hidden one, hopefully|Rival does not go for hidden pick-ups, it does however go for remembered ones if they're still available|
+|Target taken|It will go for either closest it can see or closest from memory.|It quickly finds another target, where closest observed is prio|
 |Unreachable target|It should go after a previously found target, so a remembered target, target it sees or patrol after one.|Instead of going after other targets, it focuses in on the one it is unable to reach and instead of going anywhere, the Rival just stands there|
-|No usable pickup|Patrolling until it realises there's no usable pickups.||
+|No usable pickup|Patrolling until it realises there's no usable pickups.|It keeps on patrolling in it's loop|
 
 
 
@@ -86,9 +90,7 @@ In the foreach-loop (Candidate candidate in observation.Candidates), it only loo
 
 
 
-My experiment was a bunch of else if-statements, one of the earliest ones being: else if (candidate.Available \&\& candidate.DistanceSquared < distance \&\& !candidate.Blocked \&\& candidate.Visible).
-
-I was struggling a bit to find the logic, which is why I found inspiration.
+My experiment was a bunch of else if-statements, trying to get the logic right with which target to ignore. One of the earliest ones being: else if (candidate.Available \&\& candidate.DistanceSquared < distance \&\& !candidate.Blocked \&\& candidate.Visible). I wanted to work with the fact that Scraps could be blocked from the get go, but I was struggling a bit to find the logic, which is why I found inspiration in the pre-written script presented by the teacher.
 
 
 
@@ -101,6 +103,7 @@ I was struggling a bit to find the logic, which is why I found inspiration.
 
 
 
+
 **Code, sources or substantive tools/AI assistance I used, and how I verified them:**
 
 
@@ -108,9 +111,8 @@ I was struggling a bit to find the logic, which is why I found inspiration.
 I did look at the finished written code by the teacher, because I was on the right track with how to write the required code but I was hitting some issues. By taking some inspiration from that script, I managed to see what I did wrong and could add the code I wanted.
 
 
+
 **If unfinished: what works, exact reproduction steps, and the help I need:**
-
-
 
 
 
